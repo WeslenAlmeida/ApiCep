@@ -3,20 +3,19 @@ using System.Net;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace ApiCep.Service
 {
     public class AddressService
     {
-       
-        
         public AddressService()
         {
          
         }
 
         //Método para executar uma requisição web
-        public async Task<string> GetAddress(string cep)
+        public string GetAddress(string cep)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://viacep.com.br/ws/" + cep + "/json/");
             request.AllowAutoRedirect = false;
@@ -34,6 +33,5 @@ namespace ApiCep.Service
             
             return responseText;
         }
-             
     }
 }

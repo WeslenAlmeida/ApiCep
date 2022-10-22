@@ -21,7 +21,7 @@ namespace ApiCep.Controllers
             if (address == null)
                 return NotFound();
 
-            return Ok(address.Result);
+            return Ok(address);
         }
     }
 }
