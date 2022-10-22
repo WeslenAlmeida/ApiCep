@@ -18,9 +18,10 @@ namespace ApiCep.Service
         // A classe Task representa uma operação assíncrona.
         public async Task<string> Main(string cep)
         {
-            // A HttpClient Fornece uma classe para enviar solicitações HTTP e receber respostas HTTP de um recurso identificado por um URI.
+            // A HttpClient Fornece uma classe para enviar solicitações HTTP e receber respostas HTTP de um recurso identificado por uma URI.
             using (HttpClient client = new HttpClient())
             {
+                // A Classe HttpResponseMensage representa uma mensagem de resposta HTTP incluindo o código de status e os dados.
                 // O GetAsync envia uma solicitação GET para o URI especificado como uma operação assíncrona.
                 HttpResponseMessage response = await client.GetAsync("https://viacep.com.br/ws/" + cep + "/json/");
 
