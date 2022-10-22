@@ -16,12 +16,12 @@ namespace ApiCep.Controllers
         [HttpGet("{cep}")]
         public ActionResult<string> Get(string cep)
         {
-            var address = new AddressService().GetAddress(cep); 
+            var address = new AddressService().Main(cep); 
 
             if (address == null)
                 return NotFound();
 
-            return Ok(address);
+            return Ok(address.Result);
         }
     }
 }

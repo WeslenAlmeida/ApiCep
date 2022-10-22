@@ -4,6 +4,8 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using System.Net.Http.Json;
+using System.Text.Json;
 
 namespace ApiCep.Service
 {
@@ -13,25 +15,21 @@ namespace ApiCep.Service
         {
          
         }
-
-        //Método para executar uma requisição web
-        public string GetAddress(string cep)
+        // A classe Task representa uma operação assíncrona.
+        public async Task<string> Main(string cep)
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://viacep.com.br/ws/" + cep + "/json/");
-            request.AllowAutoRedirect = false;
-            HttpWebResponse ChecaServidor = (HttpWebResponse)request.GetResponse();
+            // A HttpClient Fornece uma classe para enviar solicitações HTTP e receber respostas HTTP de um recurso identificado por um URI.
+            using (HttpClient client = new HttpClient())
+            {
+                // O GetAsync envia uma solicitação GET para o URI especificado como uma operação assíncrona.
+                HttpResponseMessage response = await client.GetAsync("https://viacep.com.br/ws/" + cep + "/json/");
 
-            Stream web = ChecaServidor.GetResponseStream();
+                // O EnsureSuccessStatusCode gera uma exceção se a propriedade IsSuccessStatusCode da resposta HTTP for false
+                response.EnsureSuccessStatusCode();
 
-            if (web == null)
-                return null;
-
-            StreamReader responseReader = new StreamReader(web);
-
-            //Caso a requisição obtenha uma resposta ela insere na string responseText
-            string responseText = responseReader.ReadToEnd();
-            
-            return responseText;
+                // O ReadAsStringAsync serializa o conteúdo HTTP em uma cadeia de caracteres como uma operação assíncrona.
+                return await response.Content.ReadAsStringAsync();
+            }
         }
     }
 }
